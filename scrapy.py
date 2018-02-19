@@ -16,12 +16,16 @@ num = page_soup.findAll("strong",{"class":"tel-wrapper"})
 title = page_soup.findAll("span",{"class":"h1"})
 price = page_soup.findAll("span",{"class":"item-price"})
 img = page_soup.findAll("img")
+desc = page_soup.findAll("div",{"class":"item-description margin-bottom-30"})
+
+file = open("file2.json", "w")
+
+file.write("{\n\"recherche\": {\n\t\"titre\": \"" + title[0].text.encode('utf-8') + "\", \n\t\"numero\": \"" + num[1].text.strip().encode('utf-8') + "\", \n\t\"prix\": \"" + price[0].text.encode('utf-8') + "\", \n\t\"desc\": \"" + desc[0].div.p.text.strip().encode('utf-8').replace('\n',' ').replace('\r','') + "\",\n\t\"images\": {\n")
 
 for image in img:
     photo = str(image).split("\"")[3]
-    if test.split(":")[0] == "https":
-        print(test)
+    if photo.split(":")[0] == "https":
+        file.write("\t\t\"image" + "" + "\": \"" + photo.encode('utf-8') + "\",\n")
 
-print(num[1].text.strip())
-print(title[0].text)
-print(price[0].text)
+file.write("\t}\n}}\n")
+file.close()

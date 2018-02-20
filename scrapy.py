@@ -20,10 +20,12 @@ name_file = now.strftime("%Y-%m-%d_%H-%M")
 
 file = open(name_file + ".json", "w")
 file.write("{\n")
+var2 = 0
 tmp = ""
 for link in matches:
     if link.find("annonce/") == 1:
         if link != tmp and link.split("-")[12][0] == "r":
+            var2 = var2 + 1
             tmp = link
             url_annonce = "https://www.pap.fr/" + link
             html2 = urlopen(url_annonce)
@@ -84,7 +86,8 @@ for link in matches:
             else:
                 file.write("\t\t\t\"image" + str(var + 1) + "\": \"" + "Fin" + "\"\n")
             file.write("\t\t}\n")
-            file.write("\t},\n")
+            if var2 < 10:
+                file.write("\t},\n")
 else:
     file.write("\t}\n")
 file.write("}\n")

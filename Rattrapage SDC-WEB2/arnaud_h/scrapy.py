@@ -73,17 +73,19 @@ for link in matches:
             # Trouver la/les photo(s)
             img = page_soup2.findAll("img")
             file.write("\t\t\"images\": {\n")
-            if not img:
-                file.write("\t\t\t\"image1\": \"" + "no image" + "\",")
-                print("no image")
+            file.write("\t\t\t\"image0\": \"" + "no image" + "\",\n")
+            var = 0
+            for image in img:
+                photo = str(image).split("\"")[3]
+                if photo.split(":")[0] == "https":
+                    var = var + 1
+                    file.write("\t\t\t\"image" + str(var) + "\": \"" + photo.encode('utf-8') + "\",\n")
+                    print(photo.encode('utf-8'))
             else:
-                var = 0
-                for image in img:
-                    photo = str(image).split("\"")[3]
-                    if photo.split(":")[0] == "https":
-                        var = var + 1
-                        file.write("\t\t\t\"image" + str(var) + "\": \"" + photo.encode('utf-8') + "\",\n")
+                file.write("\t\t\t\"image" + str(var + 1) + "\": \"" + "Fin" + "\"\n")
             file.write("\t\t}\n")
             file.write("\t},\n")
+else:
+    file.write("\t}\n")
 file.write("}\n")
 file.close()

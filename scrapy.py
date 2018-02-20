@@ -74,7 +74,7 @@ for link in matches:
             img = page_soup2.findAll("img")
             file.write("\t\t\"images\": {\n")
             if not img:
-                file.write("\t\t\"image1\": \"" + "no image" + "\",")
+                file.write("\t\t\t\"image1\": \"" + "no image" + "\",")
                 print("no image")
             else:
                 var = 0
@@ -82,8 +82,8 @@ for link in matches:
                     photo = str(image).split("\"")[3]
                     if photo.split(":")[0] == "https":
                         var = var + 1
-                        file.write("\t\t\"image" + str(var) + "\": \"" + photo.encode('utf-8') + "\",\n")
-            
+                        file.write("\t\t\t\"image" + str(var) + "\": \"" + photo.encode('utf-8') + "\",\n")
+            file.write("\t\t}\n")
             file.write("\t},\n")
 file.write("}\n")
 file.close()

@@ -10,10 +10,14 @@ content = html.read()
 html.close()
 page_soup = soup(content, "html.parser")
 
+# Recuperer tout les liens vers les 10 annonces les plus recentes
 link_to_annonce = page_soup.findAll("div",{"class":"search-results-list"})
 matches = re.findall('href="(.*?)"', str(link_to_annonce))
+
+# Nommer le fichier json de la date_heure du scaping
 now = datetime.datetime.now()
 name_file = now.strftime("%Y-%m-%d_%H-%M")
+
 file = open(name_file + ".json", "w")
 file.write("{\n")
 tmp = ""
@@ -21,7 +25,6 @@ for link in matches:
     if link.find("annonce/") == 1:
         if link != tmp and link.split("-")[12][0] == "r":
             tmp = link
-            #print(link)
             url_annonce = "https://www.pap.fr/" + link
             html2 = urlopen(url_annonce)
             content2 = html2.read()
@@ -83,19 +86,4 @@ for link in matches:
             
             file.write("\t},\n")
 file.write("}\n")
-
-#img = page_soup.findAll("img")
-            
-#file = open("file2.json", "w")
-
-#file.write("{\n\"recherche\": {\n\t\"titre\": \"" + title[0].text.encode('utf-8') + "\", \n\t\"numero\": \"" + num[1].text.strip().encode('utf-8') + "\", \n\t\"prix\": \"" + price[0].text.encode('utf-8') + "\", \n\t\"desc\": \"" + desc[0].div.p.text.strip().encode('utf-8').replace('\n',' ').replace('\r','') + "\",\n\t\"images\": {\n")
-
-#var = 0
-#for image in img:
-#    photo = str(image).split("\"")[3]
-#    if photo.split(":")[0] == "https":
-#        var = var + 1
-#        file.write("\t\t\"image" + str(var) + "\": \"" + photo.encode('utf-8') + "\",\n")
-
-#file.write("\t}\n}}\n")
 file.close()

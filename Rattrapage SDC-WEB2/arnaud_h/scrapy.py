@@ -18,7 +18,7 @@ matches = re.findall('href="(.*?)"', str(link_to_annonce))
 now = datetime.datetime.now()
 name_file = now.strftime("%Y-%m-%d_%H-%M")
 
-file = open(name_file + ".json", "w")
+file = open("./json_file/" + name_file + ".json", "w")
 file.write("{\n")
 var2 = 0
 tmp = ""
@@ -34,7 +34,7 @@ for link in matches:
             page_soup2 = soup(content2, "html.parser")
 
             # Numero annonce (format : rXXXXXXXXX)
-            file.write("\t\"" + link.split("-")[12] + "\": {\n")
+            file.write("\t\"" + str(var2) + "\": {\n")
             
             # Trouver le titre
             title = page_soup2.findAll("span",{"class":"h1"})
